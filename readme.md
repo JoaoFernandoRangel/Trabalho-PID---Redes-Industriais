@@ -42,28 +42,24 @@ O sistema publica telemetria no tópico `v1/devices/me/telemetry` e escuta coman
 - **salvaSetpoint**: Task no Core 1 (opcional) que salva periodicamente a posição atual
 
 ## Bibliotecas Necessárias
-- Arduino.h
-- PID_v1.h
-- PubSubClient.h
-- WiFi.h
-- NTPClient.h
-- cJSON.h
-- LittleFS.h (opcional)
+- Arduino.h -> Bibliotecas padrão do Arduino para PlatformIO
+- PID_v1.h -> Biblioteca de cálculo de PID
+- PubSubClient.h -> Client MQTT
+- WiFi.h -> Biblioteca de conexão à wifi
+- NTPClient.h -> Client de servidor NTP
+- cJSON.h -> Biblioteca para processamento de JSON
+- LittleFS.h (opcional) -> Sistema de arquivos do ESP32
 
 ## Melhorias Planejadas (TODOs)
 - Adicionar widget para estado do LED no dashboard
 - Pausar controle quando perder conexão
-- Retornar à última posição após reinício
+- Retornar à última posição após reset da placa
 - Implementar botão de pânico (local e remoto)
-
-## Como Usar
-1. Carregue o sketch no ESP32
-2. Monitore a porta serial para ver o status da conexão
-3. Use o dashboard do ThingsBoard para monitorar e controlar o sistema
 
 ## Observações
 - O sistema mapeia a leitura do potenciômetro (0-4095) para um ângulo (0-180°)
 - Os limites de segurança (ledMax e ledMin) acionam um LED quando ultrapassados
-- A persistência de dados (LittleFS) está comentada por padrão
+- A persistência de dados (LittleFS) não está implementada por padrão
+- O desgaste do potênciometro na planta física causa ruídos nas leituras que distorcem a visão no dashboard. A implementação de um filtro na leitura do feedback pode ser considerada.
 
 Para qualquer dúvida ou problema, consulte os comentários no código ou abra uma issue no repositório.
