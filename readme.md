@@ -10,18 +10,18 @@ Este projeto implementa um sistema de controle PID (Proporcional-Integral-Deriva
 - Controle remoto do setpoint e parâmetros PID
 - Limites de segurança configuráveis (ledMax e ledMin)
 - Persistência de dados (opcional, usando LittleFS)
-- Multi-tarefa usando FreeRTOS (duas tasks rodando em núcleos diferentes)
+- Multi-tarefa usando FreeRTOS (duas tasks (Potencialmente 3) rodando em núcleos diferentes)
 
 ## Hardware Necessário
 - ESP32
 - Potenciômetro (conectado ao pino 34)
-- Motor DC ou servo motor (controlado pelos pinos 32 e 33)
+- Motor DC ou servo motor (controlado por ponte H conectada aos pinos 32 e 33)
+- Ambos o servo e o potênciometro fazem parte de um kit didático utilizado com frequência no IFES
 - LED de status (pino interno LED_BUILTIN)
 - Conexão WiFi
 
 ## Configuração
-1. Renomeie o arquivo `conf_example.h` para `conf.h`
-2. Edite o `conf.h` com suas credenciais:
+1. Edite o `conf.h` com suas credenciais:
    ```cpp
    #define SSID "seu_wifi"
    #define PWD "sua_senha"
