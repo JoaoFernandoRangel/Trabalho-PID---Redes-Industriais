@@ -130,10 +130,10 @@
             <img src="dash-1.png" alt="Imagem do dashboard">
             <div class="caption">Visualização geral do sistema de monitoramento</div>
             <div class="text-block">
-                Através de experimentos conclui-se que os melhores valores de PID para o sistema são P = 30, I = 0 e D =
+                Através de experimentos conclui-se que os melhores valores de PID para o sistema são kp = 30, ki = 0 e kd =
                 0. O sistema não possui muitas partes móveis além do motor o que torna os controles I e D
                 desnecessários.
-                Durante os experimentos com diferentes valores de I e D foi observado que eles apenas introduziam ruído
+                Durante os experimentos com diferentes valores de ki e kd foi observado que eles apenas introduziam ruído
                 que, somado ao ruído do potênciometro, tornava o sistema instável.
             </div>
         </section>
@@ -145,7 +145,7 @@
                 manualmente pelo usuário. Pode ser percebido no gráfico o rápido ajuste do servo motor à nova posição.
                 Ao final do gráfico flutações podem ser percebidas, no momento da foto o ruído foi atribuido ao
                 potenciometro já desgastado. Nos experimentos realizados o sistema mostrou comportamente semelhante após
-                a mudança dos valores de I e D.
+                a mudança dos valores de ki e kd.
 
             </div>
             <img src="RespostaPID.jpeg" alt="Imagem de resposta ao setpoint">
@@ -162,14 +162,14 @@
             <h2>Vídeo Demonstrativo</h2>
             <div class="text-block">
                 No vídeo a seguir, é possível acompanhar a operação do sistema. Com várias mudanças de setpoint e a
-                variação do parâmetro P para 50, causando um overshoot um pouco mais acentuado.
+                variação do parâmetro kp para 50, causando um overshoot um pouco mais acentuado.
             </div>
             <video controls>
                 <source src="video-funcionamento.mp4" type="video/mp4">
                 Seu navegador não suporta a exibição do vídeo.
             </video>
             <div class="text-block">
-                Na região de valor ~140 o potênciometro mostrou uma variação mais acentuada mesmo sem alterações do
+                Na região de valor ~140º o potênciometro mostrou uma variação mais acentuada mesmo sem alterações do
                 sinal de controle. Fica evidenciado ainda mais a importância de sensores calibrados e em bom estado de
                 conservação.
                 O vídeo também mostra as transições suaves da interface gráfica e confirma a confiabilidade da
