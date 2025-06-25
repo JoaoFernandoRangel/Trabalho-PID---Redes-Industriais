@@ -1,16 +1,197 @@
 <!DOCTYPE html>
-<html lang="pt-br">
+<html lang="pt-BR">
+
 <head>
-  <meta charset="UTF-8" />
-  <title>Projeto Final</title>
-  <link rel="stylesheet" href="style.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Projeto ESP32 – Monitoramento e Controle</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: #f9f9f9;
+            margin: 0;
+            padding: 0;
+            line-height: 1.6;
+        }
+
+        header {
+            background: #2c3e50;
+            color: white;
+            padding: 30px 0;
+            text-align: center;
+        }
+
+        .header-title {
+            text-align: center;
+            flex: 1;
+        }
+
+        .github-link {
+            display: inline-block;
+            margin-top: 15px;
+        }
+
+        .github-icon {
+            width: 32px;
+            height: 32px;
+            fill: white;
+            transition: fill 0.2s;
+        }
+
+        .github-link:hover .github-icon {
+            fill: #cccccc;
+        }
+
+
+        main {
+            max-width: 900px;
+            margin: 40px auto;
+            padding: 0 20px;
+        }
+
+        h2 {
+            color: #2c3e50;
+        }
+
+        .text-block {
+            margin: 20px 0;
+            color: #333;
+            text-align: justify;
+        }
+
+
+        .image-block {
+            margin: 30px 0;
+            text-align: center;
+        }
+
+        .image-block img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+        }
+
+        .caption {
+            margin-top: 10px;
+            color: #555;
+            font-style: italic;
+        }
+
+        video {
+            display: block;
+            margin: 40px auto;
+            width: 100%;
+            max-width: 700px;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+        }
+
+        footer {
+            text-align: center;
+            padding: 20px;
+            font-size: 0.9em;
+            color: #888;
+        }
+    </style>
 </head>
+
 <body>
-  <h1>Meu Projeto com ESP32</h1>
-  <img src="dash-1.png" alt="Imagem de exemplo" width="1000">
-  <video width="400" controls>
-    <!-- <source src="video.mp4" type="video/mp4"> -->
-    Seu navegador não suporta vídeo.
-  </video>
+
+    <header>
+        <div class="header-title">
+            <h1>Projeto MQTT: Monitoramento e Controle de Servo Motor</h1>
+            <p>Integração de servo motor, controlado por PID, com dashboard dinâmico utilizando MQTT </p>
+            <a class="github-link" href="https://github.com/JoaoFernandoRangel/Trabalho-PID---Redes-Industriais"
+                target="_blank" title="Ver repositório no GitHub">
+                <svg class="github-icon" viewBox="0 0 16 16" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                    <path d="M8 0C3.58 0 0 3.58 0 8a8 8 0 005.47 7.59c.4.07.55-.17.55-.38 
+        0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 
+        1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 
+        0-.87.31-1.59.82-2.15-.08-.2-.36-1.01.08-2.12 0 0 .67-.21 2.2.82a7.7 7.7 0 012-.27c.68 0 1.36.09 
+        2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.11.16 1.92.08 2.12.51.56.82 1.27.82 2.15 
+        0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 
+        0 .21.15.46.55.38A8.01 8.01 0 0016 8c0-4.42-3.58-8-8-8z" />
+                </svg>
+            </a>
+        </div>
+    </header>
+
+
+    <main>
+        <section class="image-block">
+            <h2>Dashboard completo</h2>
+            <div class="text-block">
+                Este é o painel principal do sistema, onde é exibido em tempo real a posição do servo motor. Nos knobs
+                abaixo os valores de PID podem ser ajustados.
+                A direita, as barras deslizantes são responsáveis por definir o valor máximo e mínimo do servo. Ao
+                extrapolar esses limites o controlador aciona um led de aviso.
+            </div>
+            <img src="dash-1.png" alt="Imagem do dashboard">
+            <div class="caption">Visualização geral do sistema de monitoramento</div>
+            <div class="text-block">
+                Através de experimentos conclui-se que os melhores valores de PID para o sistema são P = 30, I = 0 e D =
+                0. O sistema não possui muitas partes móveis além do motor o que torna os controles I e D
+                desnecessários.
+                Durante os experimentos com diferentes valores de I e D foi observado que eles apenas introduziam ruído
+                que, somado ao ruído do potênciometro, tornava o sistema instável.
+            </div>
+        </section>
+
+        <section class="image-block">
+            <h2>Resposta à distúrbios e à mudança de setpoint</h2>
+            <div class="text-block">
+                Abaixo é possível observar como o sistema responde quando o valor de referência (setpoint) é ajustado
+                manualmente pelo usuário. Pode ser percebido no gráfico o rápido ajuste do servo motor à nova posição.
+                Ao final do gráfico flutações podem ser percebidas, no momento da foto o ruído foi atribuido ao
+                potenciometro já desgastado. Nos experimentos realizados o sistema mostrou comportamente semelhante após
+                a mudança dos valores de I e D.
+
+            </div>
+            <img src="RespostaPID.jpeg" alt="Imagem de resposta ao setpoint">
+            <div class="caption">Comportamento do sistema após reajuste de setpoint</div>
+
+            <div class="text-block">
+                A taxa de envio de dados para a plataforma é de duas amostras por segundo, isso causa um leve problema
+                de aliasing quando analisando o gráfico. Pode-se perceber também o delay de resposta do sistema e o
+                overshoot da resposta ao sinal de controle.
+            </div>
+        </section>
+
+        <section>
+            <h2>Vídeo Demonstrativo</h2>
+            <div class="text-block">
+                No vídeo a seguir, é possível acompanhar a operação do sistema. Com várias mudanças de setpoint e a
+                variação do parâmetro P para 50, causando um overshoot um pouco mais acentuado.
+            </div>
+            <video controls>
+                <source src="video-funcionamento.mp4" type="video/mp4">
+                Seu navegador não suporta a exibição do vídeo.
+            </video>
+            <div class="text-block">
+                Na região de valor ~140 o potênciometro mostrou uma variação mais acentuada mesmo sem alterações do
+                sinal de controle. Fica evidenciado ainda mais a importância de sensores calibrados e em bom estado de
+                conservação.
+                O vídeo também mostra as transições suaves da interface gráfica e confirma a confiabilidade da
+                comunicação entre os módulos do projeto.
+            </div>
+        </section>
+        <section>
+            <h2 >Considerações Finais</h2>
+            <div class="text-block">
+                O projeto demonstrou a eficácia do uso de MQTT para comunicação entre o ESP32 e o dashboard, permitindo
+                um controle preciso do servo motor. A integração com o PID possibilitou ajustes rápidos e eficientes,
+                garantindo uma resposta adequada às mudanças de setpoint.
+                A experiência adquirida com este projeto pode ser aplicada em futuras implementações de sistemas
+                embarcados que necessitem de monitoramento e controle remoto.
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        Projeto desenvolvido para a disciplina de Sistemas Embarcados • Junho de 2025
+    </footer>
+
 </body>
+
 </html>
